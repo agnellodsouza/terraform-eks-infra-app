@@ -1,3 +1,9 @@
+/*
+- we are using the EC2 module to create the bastion host 
+- allowing ssh access to only my local IP 
+
+*/
+
 module "public_bastion_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.5.0"

@@ -1,3 +1,13 @@
+/*
+this file does the folowing : 
+
+- creating the s3 bucket to store the zipped git repo 
+- createing code pipeline to excute when code is checked in to git 
+	- setting the soruce stage 
+	- setting the build stage 
+
+*/
+
 resource "aws_s3_bucket" "cicd_bucket" {
   bucket = "${local.name}-codepipeline-s3"
 }

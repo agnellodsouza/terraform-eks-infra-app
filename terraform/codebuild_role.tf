@@ -1,3 +1,10 @@
+/*
+this files create the IAM role and attaches the required policies to it . 
+	- ensure access to ECR  ( for login only ) 
+	- ensurs access to EKS 
+	- ensure acess to s3 ( read only ) 
+*/
+
 resource "aws_iam_role" "containerAppBuildProjectRole" {
   name = "${local.name}-app-Codebuild-role"
 

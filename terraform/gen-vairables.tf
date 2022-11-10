@@ -1,3 +1,9 @@
+/*
+
+- generic vairables to be used through out the infra setup 
+
+*/
+
 variable "aws_region" {
   description = "Region Nme "
   type = string

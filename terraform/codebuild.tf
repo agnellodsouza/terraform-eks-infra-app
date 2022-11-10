@@ -1,3 +1,13 @@
+/*
+- this file builds the AWS  codebuild 
+	- sets the services role 
+	- sets the container images config 
+	- sets the required env vairables
+	- sets the logs group and stream 
+	- And accepts request from CODEPIPELINE 
+
+*/
+
 resource "aws_codebuild_project" "containerAppBuild" {
   badge_enabled  = false
   build_timeout  = 60

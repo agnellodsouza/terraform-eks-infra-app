@@ -1,3 +1,8 @@
+/*
+- creating the IAM role for codepipeline and attaching the appropriate policy 
+
+*/
+
 resource "aws_iam_role" "apps_codepipeline_role" {
   name = "${local.name}-code-pipeline-role"
 

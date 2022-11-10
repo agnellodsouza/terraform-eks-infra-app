@@ -1,3 +1,10 @@
+
+/*
+
+- use this file to create maps or create a vairable with pattern 
+
+*/
+
 locals {
   owners = var.owner
   environment = var.environment
