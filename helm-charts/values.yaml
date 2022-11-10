@@ -1,0 +1,16 @@
+metaInfo:
+        namespace: development
+
+myappDeploy:
+        name: myapp-deployment
+        replicaCount: 2
+        appLable: myapp
+        image: 617686195573.dkr.ecr.ap-south-1.amazonaws.com/agnello-agnello-demo-naviteq-ecr:latest
+        ContainerPort: 8080
+
+myappService:
+        name: myapp-lb-service-nlb
+        PortName: http
+        Port: 8080
+        TargetPort: 8080
+

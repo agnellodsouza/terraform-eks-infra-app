@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: #Dictionary
+  name: {{ .Values.myappDeploy.name }}
+  namespace: {{ .Values.metaInfo.namespace }}
+spec: # Dictionary
+  replicas: {{ .Values.myappDeploy.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.myappDeploy.appLable }}
+  template:  
+    metadata: # Dictionary
+      name: {{ .Values.myappDeploy.appLable }}
+      labels: # Dictionary
+        app: {{ .Values.myappDeploy.appLable }}  # Key value pairs
+    spec:
+      containers: # List
+        - name: {{ .Values.myappDeploy.appLable }}
+          image:  {{ .Values.myappDeploy.image }}
+          ports: 
+            - containerPort: {{ .Values.myappDeploy.ContainerPort }}
+    

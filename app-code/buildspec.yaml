@@ -1,0 +1,46 @@
+version: 0.2
+    
+phases:
+  install:
+    commands:
+      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.7/2022-06-29/bin/linux/amd64/kubectl
+      - chmod +x kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
+      - wget https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz
+      - chmod +x ./linux-amd64/helm
+      - mv ./linux-amd64/helm /usr/local/bin/helm      
+  pre_build:
+    commands:
+      - export AWS_RAW_CRED=$(curl --silent http://169.254.170.2:80$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)
+      - export AWS_ACCESS_KEY_ID=$(echo $AWS_RAW_CRED | jq -r '.AccessKeyId')
+      - export AWS_SECRET_ACCESS_KEY=$(echo $AWS_RAW_CRED | jq -r '.SecretAccessKey')
+      - export AWS_SESSION_TOKEN=$(echo $AWS_RAW_CRED | jq -r '.Token')     
+      - echo $AWS_ACCESS_KEY_ID ; echo $AWS_SECRET_ACCESS_KEY
+      - echo XXXXXXXX cd to app-code XXXXXXXXX
+      - cd app-code/
+      - echo XXXXXXX importing docker image XXXXXXXXX
+      - docker load  <  packages/myapp.tgz 
+      - echo XXXXXXX Logging in to Amazon ECR..XXXXXXXXX.
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - echo Build files...
+      - echo XXXXXXXXXX Logging in to Amazon EKS...XXXXXXXXXX
+      - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME 
+      - helm --help
+      - cd ../helm-charts
+      - helm upgrade myapp . 
+  post_build:
+    commands:
+      - echo Build completed on `date`
+  build:
+    commands:
+      - echo XXXXXXXX Building the Docker image... XXXXXXXXXXX
+      - docker build -t myapp . 
+      - docker image tag myapp:latest  $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - sleep 10 
+      - echo XXXXXXXXX Deploying helm-charts XXXXXXXXX
+      - helm --help
+      - "helm upgrade myapp ."
+  post_build:
+    commands:
+      - echo Build completed on `date`

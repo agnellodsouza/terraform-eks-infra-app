@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: #Dictionary
+  name: myapp-deployment
+  namespace: development
+spec: # Dictionary
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:  
+    metadata: # Dictionary
+      name: myapp
+      labels: # Dictionary
+        app: myapp  # Key value pairs
+    spec:
+      containers: # List
+        - name: myapp
+          image:  617686195573.dkr.ecr.ap-south-1.amazonaws.com/agnello-agnello-demo-naviteq-ecr:latest
+          ports: 
+            - containerPort: 8080  
+    

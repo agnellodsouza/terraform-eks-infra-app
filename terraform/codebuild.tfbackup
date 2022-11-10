@@ -1,0 +1,14 @@
+
+data "aws_secretsmanager_secret_version" "github_token" {
+  # Fill in the name you gave to your secret
+  secret_id = "sometext"
+}
+
+
+
+
+resource "aws_codebuild_source_credential" "example" {
+  auth_type   = "PERSONAL_ACCESS_TOKEN"
+  server_type = "GITHUB"
+  token       = "${aws_secretsmanager_secret_version.github_token.secret_string}"
+}
