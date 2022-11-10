@@ -5,7 +5,7 @@ myappDeploy:
         name: myapp-deployment
         replicaCount: 2
         appLable: myapp
-        image: 617686195573.dkr.ecr.ap-south-1.amazonaws.com/agnello-agnello-demo-naviteq-ecr:latest
+        image: 617686195573.dkr.ecr.ap-south-1.amazonaws.com/agnello-demo-naviteq-ecr:latest
         ContainerPort: 8080
 
 myappService:

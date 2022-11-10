@@ -8,7 +8,7 @@ metadata:
 spec:
   type: LoadBalancer # ClusterIp, # NodePort
   selector:
-    app: {{ .Values.myappDeploy.name  }}
+    app: {{ .Values.myappDeploy.appLable  }}
   ports: 
     - name: {{ .Values.myappService.PortName }}
       port: {{ .Values.myappService.Port }} # Service Port
